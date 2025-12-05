@@ -7,13 +7,13 @@ const ZoneCInventory = () => {
   return (
     <div className="zone-card">
       <div className="zone-header">
-        Zone C: DSLAM Status & Defective Sets Inventory
+        DSLAM Status & Defective Sets Inventory
       </div>
       <div className="p-4 space-y-6">
         {/* DSLAM Status */}
         <div>
           <h3 className="text-sm font-semibold mb-3 text-foreground">
-            Bandwidth Utilization (As per Cacti Graph)
+            Bandwidth Utilization
           </h3>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">

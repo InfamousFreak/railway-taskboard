@@ -19,11 +19,12 @@ interface AppContextType {
   defectiveSets: DefectiveSetsEntry;
   updateDefectiveSets: (field: keyof DefectiveSetsEntry, value: unknown) => void;
   recentChanges: AuditEntry[];
+  reorderCircuits: (oldIndex: number, newIndex: number) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(users[0]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [positionDate, setPositionDate] = useState(new Date());
@@ -32,6 +33,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [dslamStatus, setDSLAMStatus] = useState<DSLAMStatus>(initialDSLAMStatus);
   const [defectiveSets, setDefectiveSets] = useState<DefectiveSetsEntry>(initialDefectiveSets);
   const [recentChanges, setRecentChanges] = useState<AuditEntry[]>([]);
+
+  const reorderCircuits = (oldIndex: number, newIndex: number) => {
+    setCircuits((items) => {
+      const result = Array.from(items);
+      const [removed] = result.splice(oldIndex, 1);
+      result.splice(newIndex, 0, removed);
+      return result;
+    });
+  };
 
   const addToRecentChanges = useCallback((entry: AuditEntry) => {
     setRecentChanges(prev => [entry, ...prev].slice(0, 100)); // Keep last 100 entries
@@ -171,11 +181,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         defectiveSets,
         updateDefectiveSets,
         recentChanges,
+        reorderCircuits,
       }}
     >
       {children}
     </AppContext.Provider>
   );
+
+  
 };
 
 export const useApp = () => {

@@ -59,7 +59,7 @@ const ZoneBNetworkSpeed = () => {
   return (
     <div className="zone-card">
       <div className="zone-header">
-        Zone B: Network Speed Monitor - Different Web Site Response (Fast / Slow)
+        Network Speed Monitoring
       </div>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
